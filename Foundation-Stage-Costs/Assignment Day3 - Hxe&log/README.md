@@ -8,9 +8,11 @@
 
 ## طريقة التشغيل عبر الـ Terminal:
 # بناء وتشغيل أداة السجلات
-gcc log_parser.c -o parser
-./parser auth.log FAILED
+gcc log.c -o logs
+./logs win_secur.txt FAILED
 
 # بناء وتشغيل عارض الهكس
-gcc hex_viewer.c -o hexview
-./hexview suspicious.exe
+gcc hex_view.c -o hexview
+./hexview win_secur.txt
+./hexview mylog.txt
+
