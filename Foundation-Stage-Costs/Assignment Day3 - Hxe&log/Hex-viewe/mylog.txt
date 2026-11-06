@@ -1,0 +1,4 @@
+INFO: User logged in safely.
+FAILED: Someone tried a wrong password!
+INFO: System updated.
+FAILED: Another wrong login attempt!
