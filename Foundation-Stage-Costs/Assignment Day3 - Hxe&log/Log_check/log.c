@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     char *filename = argv[1];
     char *keyword = argv[2];
 
-    // فتح الملف في وضع القراءة
+    // لعمل فتح ملف وضع قرايه بس 
     FILE *f = fopen(filename, "r");
     if (f == NULL) {
         printf("Error: Can't open file %s\n", filename);
