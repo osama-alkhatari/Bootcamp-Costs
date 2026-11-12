@@ -1,7 +1,7 @@
 import socket
 import sys
 
-# مجموعة ثابتة غير قابلة للتعديل لمنافذ الويب
+
 HTTP_PORTS = frozenset({80, 443, 8000, 8080, 8443})
 
 
