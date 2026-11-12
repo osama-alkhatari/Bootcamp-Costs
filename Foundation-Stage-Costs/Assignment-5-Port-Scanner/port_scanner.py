@@ -3,7 +3,7 @@ import time
 import sys
 from concurrent.futures import ThreadPoolExecutor
 
-# قائمة ثابتة بأشهر المنافذ والخدمات
+# قائمة المنافذ المشهوره 
 SERVICES = {
     21: "FTP", 22: "SSH", 23: "Telnet", 25: "SMTP",
     53: "DNS", 80: "HTTP", 110: "POP3", 111: "RPC",
@@ -13,7 +13,7 @@ SERVICES = {
 
 
 def scan_port(target_ip, port):
-    # فحص منفذ واحد مع ضبط مهلة الاتصال
+    # فحص منفذ واحد مع ضبط وقت وا مهلة الاتصال
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(0.5)
     try:
@@ -39,7 +39,7 @@ def run_scan(target, start_p=1, end_p=1024):
     print(f"\n[*] Scanning {target_ip} (Ports: {start_p}-{end_p})...")
     start_time = time.time()
 
-    # فحص متوازي باستخدام 50 خيطاً
+    # فحص متساوي  باستخدام 50 خيطاً
     with ThreadPoolExecutor(max_workers=50) as executor:
         results = executor.map(lambda p: scan_port(target_ip, p), ports)
         open_ports = tuple(r for r in results if r is not None)
