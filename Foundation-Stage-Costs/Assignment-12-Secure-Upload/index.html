@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>التكليف الثاني عشر - نظام رفع الملفات الآمن</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background: #f4f6f8; padding: 20px; }
+        .box { max-width: 680px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+        button { padding: 9px 16px; background: #0f766e; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #0f172a; color: #f8fafc; padding: 14px; border-radius: 6px; direction: ltr; text-align: left; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>نظام رفع الملفات الآمن متعدد الطبقات</h2>
+    <p>الأنواع المسموحة: <code>jpg, png, pdf</code> (بحد أقصى 2MB).</p>
+
+    <form id="uploadForm" onsubmit="sendFile(event)" enctype="multipart/form-data">
+        <input type="file" id="uploaded_file" name="uploaded_file" required>
+        <button type="submit">رفع وفحص الملف</button>
+    </form>
+
+    <p style="font-size:13px; color:#555;">
+        ملفات تجريبية جاهزة في المجلد: <code>test_samples/valid_image.png</code> و <code>test_samples/wallpaperflare.com_wallpaper-١٢.jpg</code>
+    </p>
+
+    <pre id="result">// ستظهر نتيجة الفحص من upload.php هنا...</pre>
+</div>
+
+<script>
+async function sendFile(e) {
+    e.preventDefault();
+    const formData = new FormData(document.getElementById("uploadForm"));
+    const res = await fetch("upload.php", { method: "POST", body: formData });
+    document.getElementById("result").textContent = `HTTP Status: ${res.status}\n\n` + await res.text();
+}
+</script>
+</body>
+</html>

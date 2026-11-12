@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>التكليف العاشر - اختبار REST API</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background: #f4f6f8; padding: 20px; }
+        .box { max-width: 700px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+        input, textarea { width: 100%; padding: 8px; margin: 6px 0 12px; box-sizing: border-box; font-family: monospace; }
+        button { padding: 8px 14px; margin-left: 5px; cursor: pointer; border: none; border-radius: 4px; color: #fff; background: #2563eb; }
+        pre { background: #1e293b; color: #f8fafc; padding: 12px; border-radius: 6px; direction: ltr; text-align: left; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>أداة اختبار طلبات HTTP وواجهة REST API</h2>
+
+    <label>ترويسة Authorization:</label>
+    <input type="text" id="auth" value="Bearer sec-token-2026">
+
+    <label>جسم الطلب (JSON Body):</label>
+    <textarea id="body" rows="3">{"id": 10, "service": "IDS-Sensor", "state": "Running"}</textarea>
+
+    <div>
+        <button onclick="send('GET', false)">GET</button>
+        <button onclick="send('POST', true)">POST</button>
+        <button onclick="send('PUT', true)">PUT</button>
+        <button onclick="send('DELETE', true)">DELETE</button>
+        <button onclick="send('PATCH', false)" style="background:#dc2626">PATCH (405)</button>
+    </div>
+
+    <pre id="result">// ستظهر استجابة api.php هنا...</pre>
+</div>
+
+<script>
+async function send(method, withBody) {
+    const opts = {
+        method: method,
+        headers: { "Authorization": document.getElementById("auth").value }
+    };
+    if (withBody) {
+        opts.headers["Content-Type"] = "application/json";
+        opts.body = document.getElementById("body").value;
+    }
+    const res = await fetch("api.php", opts);
+    document.getElementById("result").textContent = `HTTP Status: ${res.status}\n\n` + await res.text();
+}
+</script>
+</body>
+</html>

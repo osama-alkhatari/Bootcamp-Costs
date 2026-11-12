@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>التكليف الحادي عشر - الحماية من SQL Injection</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background: #f4f6f8; padding: 20px; }
+        .box { max-width: 720px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+        input, select, button { padding: 9px; margin: 5px 0; border-radius: 4px; border: 1px solid #ccc; }
+        input { width: 55%; font-family: monospace; direction: ltr; }
+        button { background: #1d4ed8; color: #fff; border: none; cursor: pointer; }
+        .quick button { background: #475569; font-size: 12px; padding: 6px 10px; }
+        pre { background: #0f172a; color: #f8fafc; padding: 14px; border-radius: 6px; direction: ltr; text-align: left; overflow-x: auto; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>أداة المقارنة والحماية من ثغرات SQL Injection</h2>
+
+    <form id="searchForm" onsubmit="runSearch(event)">
+        <input type="text" id="username" value="admin" placeholder="أدخل اسم المستخدم أو Payload">
+        <select id="mode">
+            <option value="secure">الوضع الآمن (PDO Prepared)</option>
+            <option value="vulnerable">الوضع غير الآمن (دمج مباشر)</option>
+        </select>
+        <button type="submit">بحث</button>
+    </form>
+
+    <div class="quick">
+        <strong>اختبار سريع:</strong>
+        <button onclick="quickTest('admin', 'secure')">1. بحث طبيعي (admin)</button>
+        <button onclick="quickTest(`' OR '1'='1`, 'secure')">2. هجوم SQLi في الوضع الآمن</button>
+        <button onclick="quickTest(`' OR '1'='1`, 'vulnerable')">3. هجوم SQLi في الوضع غير الآمن</button>
+    </div>
+
+    <pre id="output">// ستظهر نتيجة استدعاء search.php هنا...</pre>
+</div>
+
+<script>
+async function runSearch(e) {
+    if (e) e.preventDefault();
+    const u = encodeURIComponent(document.getElementById("username").value);
+    const m = encodeURIComponent(document.getElementById("mode").value);
+    const res = await fetch(`search.php?username=${u}&mode=${m}`);
+    document.getElementById("output").textContent = await res.text();
+}
+
+function quickTest(val, mode) {
+    document.getElementById("username").value = val;
+    document.getElementById("mode").value = mode;
+    runSearch();
+}
+</script>
+</body>
+</html>
