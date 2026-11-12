@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>التكليف الرابع عشر - الوقاية من ثغرات DOM-XSS</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background: #f4f6f8; padding: 20px; }
+        .container { max-width: 700px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+        input { width: 100%; padding: 9px; margin: 8px 0 12px; box-sizing: border-box; font-family: monospace; direction: ltr; }
+        button { padding: 9px 16px; margin-left: 6px; border: none; border-radius: 4px; color: #fff; cursor: pointer; }
+        .btn-unsafe { background: #dc2626; }
+        .btn-safe { background: #16a34a; }
+        .result-box { margin-top: 14px; padding: 12px; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; min-height: 36px; }
+        .note { margin-top: 12px; font-size: 13px; color: #334155; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>أداة التفاعل مع DOM والوقاية من ثغرات DOM-XSS</h2>
+
+    <label for="userInput">أدخل نصاً أو حمولة اختبار (Payload):</label>
+    <input type="text" id="userInput" value="<img src=x onerror=alert(1)>">
+
+    <div>
+        <button id="btnUnsafe" class="btn-unsafe">عرض غير آمن (innerHTML)</button>
+        <button id="btnSafe" class="btn-safe">عرض آمن (textContent)</button>
+    </div>
+
+    <h4>نتيجة العرض غير الآمن (innerHTML):</h4>
+    <div id="unsafeBox" class="result-box">-</div>
+
+    <h4>نتيجة العرض الآمن (textContent + createElement):</h4>
+    <div id="safeBox" class="result-box">-</div>
+
+    <div id="statusNote" class="note"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

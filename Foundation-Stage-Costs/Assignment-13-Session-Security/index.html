@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>التكليف الثالث عشر - إدارة الجلسات والكوكيز الآمنة</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background: #f4f6f8; padding: 20px; }
+        .box { max-width: 720px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; }
+        button { padding: 8px 14px; margin: 4px; background: #1d4ed8; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        pre { background: #0f172a; color: #f8fafc; padding: 14px; border-radius: 6px; direction: ltr; text-align: left; overflow-x: auto; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>أداة إدارة الجلسات والكوكيز المحمية (HttpOnly & SameSite)</h2>
+
+    <div>
+        <button onclick="callSession('status')">1. Check Session Status</button>
+        <button onclick="callSession('login')" style="background:#16a34a">2. Login & Regenerate Session ID</button>
+        <button onclick="checkJsCookies()" style="background:#d97706">3. Inspect document.cookie via JS</button>
+    </div>
+
+    <h4>Server Response (session_manager.php):</h4>
+    <pre id="serverOut">// Click button 1 or 2...</pre>
+
+    <h4>JavaScript Cookie Inspection (document.cookie):</h4>
+    <pre id="jsOut">// Click button 3 to verify HttpOnly protection...</pre>
+</div>
+
+<script>
+async function callSession(action) {
+    const res = await fetch(`session_manager.php?action=${action}&username=cyber_admin`);
+    document.getElementById("serverOut").textContent = await res.text();
+    checkJsCookies();
+}
+
+function checkJsCookies() {
+    const raw = document.cookie || "(empty)";
+    const blocked = !document.cookie.includes("protected_cookie") && !document.cookie.includes("PHPSESSID");
+    document.getElementById("jsOut").textContent =
+        `document.cookie : "${raw}"\n` +
+        `HttpOnly Status : ${blocked ? "PROTECTED (PHPSESSID & protected_cookie hidden from JS)" : "EXPOSED"}`;
+}
+
+callSession('status');
+</script>
+</body>
+</html>
