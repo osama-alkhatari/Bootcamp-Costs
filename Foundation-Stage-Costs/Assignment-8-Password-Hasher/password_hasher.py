@@ -3,7 +3,7 @@ import string
 import hashlib
 import sys
 
-# سلسلة ثابتة غير قابلة للتعديل تضم كافة فئات المحارف
+
 CHAR_POOL = string.ascii_letters + string.digits + string.punctuation
 
 
@@ -11,7 +11,7 @@ def generate_password(length=16):
     if length < 8:
         length = 8
 
-    # ضمان وجود محرف واحد على الأقل من كل فئة ثم إكمال الطول المطلوب
+    # ضمان وجود محرف واحد على الأقل من كل فئة ثم اكمال او انتهاء الطول المطلوب
     pwd = [
         secrets.choice(string.ascii_lowercase),
         secrets.choice(string.ascii_uppercase),
