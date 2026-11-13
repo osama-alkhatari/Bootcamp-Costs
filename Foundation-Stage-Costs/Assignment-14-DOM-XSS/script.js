@@ -1,4 +1,4 @@
-// تجميد إعدادات العناصر لمنع التعديل عليها من المتصفح 
+// تجميد إعدادات العناصر لمنع التعديل عليها من المتصف
 const DOM_CONFIG = Object.freeze({
     inputId: "userInput",
     unsafeBox: document.getElementById("unsafeBox"),
@@ -6,14 +6,14 @@ const DOM_CONFIG = Object.freeze({
     statusNote: document.getElementById("statusNote")
 });
 
-// العرض غير الآمن:  (يسمح بتنفيذ أكواد XSS)
+// العرض غير الآمن
 document.getElementById("btnUnsafe").addEventListener("click", function () {
     const value = document.getElementById(DOM_CONFIG.inputId).value;
     DOM_CONFIG.unsafeBox.innerHTML = value;
     DOM_CONFIG.statusNote.textContent = "[WARNING] Rendered via innerHTML: Input parsed as executable HTML/JS!";
 });
 
-// العرض الآمن: بناء العنصر عبر createElement وإسناد النص لـ textContent
+// العرض الآمن
 document.getElementById("btnSafe").addEventListener("click", function () {
     const value = document.getElementById(DOM_CONFIG.inputId).value;
     DOM_CONFIG.safeBox.textContent = "";
